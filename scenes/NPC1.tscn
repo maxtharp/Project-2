@@ -1,0 +1,107 @@
+[gd_scene load_steps=10 format=3 uid="uid://c61882fh0xqdr"]
+
+[ext_resource type="Script" path="res://scripts/NPC1.gd" id="1_kpqme"]
+[ext_resource type="Texture2D" uid="uid://cg72i7wemrwda" path="res://visuals/NPC 1.png" id="2_heccv"]
+[ext_resource type="AudioStream" uid="uid://cxdyfgthpaaeb" path="res://sounds/talk.wav" id="3_nbsnw"]
+
+[sub_resource type="Animation" id="Animation_3pq8v"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_1iyx7"]
+resource_name = "idle"
+length = 0.7
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_bq4qx"]
+resource_name = "selected"
+length = 0.7
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dc403"]
+_data = {
+"RESET": SubResource("Animation_3pq8v"),
+"idle": SubResource("Animation_1iyx7"),
+"selected": SubResource("Animation_bq4qx")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6flyn"]
+radius = 29.1548
+
+[sub_resource type="LabelSettings" id="LabelSettings_6dnv4"]
+
+[node name="RigidBody2D" type="StaticBody2D"]
+position = Vector2(159, 182)
+script = ExtResource("1_kpqme")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("2_heccv")
+hframes = 2
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dc403")
+}
+
+[node name="detectionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detectionArea"]
+shape = SubResource("CircleShape2D_6flyn")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -79.0
+offset_top = -76.0
+offset_right = 81.0
+offset_bottom = -27.0
+text = "
+"
+label_settings = SubResource("LabelSettings_6dnv4")
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="talk_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_nbsnw")
+volume_db = -16.228
+pitch_scale = 1.64
+
+[connection signal="body_entered" from="detectionArea" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="detectionArea" to="." method="_on_area_2d_body_exited"]

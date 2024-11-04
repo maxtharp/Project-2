@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://dk30s6po8lbwo"]
+
+[ext_resource type="Script" path="res://scripts/button.gd" id="1_0xtx4"]
+
+[node name="menu" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 590.0
+offset_top = 360.0
+offset_right = 745.0
+offset_bottom = 383.0
+scale = Vector2(4.84, 4.84)
+text = "FIND THE DIAMOND"
+
+[node name="Button" type="Button" parent="."]
+offset_left = 718.0
+offset_top = 496.0
+offset_right = 824.0
+offset_bottom = 527.0
+scale = Vector2(4.28, 4.28)
+text = "START GAME
+"
+script = ExtResource("1_0xtx4")
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 14.0
+offset_top = 867.0
+offset_right = 136.0
+offset_bottom = 942.0
+scale = Vector2(2.6, 2.6)
+text = "WASD - MOVE
+SPACE - ATTACK
+E - INTERACT"
+
+[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]

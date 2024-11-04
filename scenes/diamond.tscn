@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://cjy5lyhq47sgb"]
+
+[ext_resource type="Texture2D" uid="uid://t22js7idxmeg" path="res://visuals/tiles_packed.png" id="1_2kky4"]
+[ext_resource type="Script" path="res://scripts/diamond.gd" id="1_gjfxi"]
+[ext_resource type="AudioStream" uid="uid://bsbf5kmhday8j" path="res://sounds/pickupdiamond.wav" id="3_dsuxe"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ts271"]
+radius = 12.0
+
+[node name="diamond" type="StaticBody2D"]
+script = ExtResource("1_gjfxi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_2kky4")
+hframes = 20
+vframes = 9
+frame = 67
+
+[node name="detectionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detectionArea"]
+shape = SubResource("CircleShape2D_ts271")
+
+[node name="pickupdiamond_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_dsuxe")
+volume_db = -12.18
+
+[connection signal="body_entered" from="detectionArea" to="." method="_on_detection_area_body_entered"]

@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://dn2jgt25rl55q"]
+
+[ext_resource type="Script" path="res://scripts/portal2.gd" id="1_cymxj"]
+[ext_resource type="Texture2D" uid="uid://b630jijvf3yco" path="res://visuals/portal.png" id="2_w1o32"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iatln"]
+atlas = ExtResource("2_w1o32")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fgr2a"]
+atlas = ExtResource("2_w1o32")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2wc3h"]
+atlas = ExtResource("2_w1o32")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pkmtn"]
+animations = [{
+"frames": [{
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_iatln")
+}, {
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_fgr2a")
+}, {
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_2wc3h")
+}],
+"loop": true,
+"name": &"portal_ready",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_k67pa"]
+
+[node name="portal" type="StaticBody2D"]
+script = ExtResource("1_cymxj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_pkmtn")
+animation = &"portal_ready"
+
+[node name="detection_area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
+scale = Vector2(1.91898, 1.91898)
+shape = SubResource("CircleShape2D_k67pa")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -62.0
+offset_top = -50.0
+offset_right = 82.0
+offset_bottom = -27.0
+text = "press E to advance"
+
+[connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]
